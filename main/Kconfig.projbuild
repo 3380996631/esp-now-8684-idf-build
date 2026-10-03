@@ -1,0 +1,36 @@
+menu "Serial bridge"
+
+    choice BRIDGE_ROLE
+        prompt "Role"
+        default BRIDGE_ROLE_SENDER
+        help
+            发送端：UART1 收传感器 -> ESP-NOW 发出。
+            网关：  ESP-NOW 收到 -> UART0 写给 PC。
+    config BRIDGE_ROLE_SENDER
+        bool "Sender (UART RX -> ESP-NOW)"
+    config BRIDGE_ROLE_GATEWAY
+        bool "Gateway (ESP-NOW -> UART0 TX)"
+    endchoice
+
+    config BRIDGE_BAUD
+        int "Sensor UART baud rate"
+        default 38400
+
+    config BRIDGE_TX_GPIO
+        int "Sensor UART TX GPIO (sender only, -1 = leave default)"
+        default 7
+
+    config BRIDGE_RX_GPIO
+        int "Sensor UART RX GPIO (sender only, -1 = leave default)"
+        default 6
+
+    config BRIDGE_CHANNEL
+        int "ESP-NOW channel (1-13, must match on both boards)"
+        range 1 13
+        default 1
+
+    config BRIDGE_PEER_MAC
+        string "Peer MAC address (aa:bb:cc:dd:ee:ff, ff:ff:ff:ff:ff:ff = accept any)"
+        default "ff:ff:ff:ff:ff:ff"
+
+endmenu

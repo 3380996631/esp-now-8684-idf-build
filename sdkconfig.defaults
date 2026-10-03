@@ -1,0 +1,7 @@
+# C2 + 26MHz 晶振时，IDF 把控制台默认成 74880（esp_stdio/Kconfig:154）。
+# 我们这根线是网关唯一通往 PC 的路，数据走 115200，日志也统一到 115200，
+# PC 端只要开一个速率。
+# 注意：波特率的 prompt 只在 ESP_CONSOLE_UART_CUSTOM 下可见（也就是必须选 Custom），
+# 所以这两行要一起写；只写 BAUDRATE 会被 Kconfig 的 default 盖回 74880。
+CONFIG_ESP_CONSOLE_UART_CUSTOM=y
+CONFIG_ESP_CONSOLE_UART_BAUDRATE=115200
